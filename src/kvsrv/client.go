@@ -35,9 +35,31 @@ func MakeClerk(server *labrpc.ClientEnd) *Clerk {
 // must match the declared types of the RPC handler function's
 // arguments. and reply must be passed as a pointer.
 func (ck *Clerk) Get(key string) string {
-
-	// You will have to modify this function.
-	return ""
+	OperationId := nrand()
+	args := GetArgs{
+		Key: key,
+		Version: OperationId,
+		Message: Modify, 
+	}
+	reply :=GetReply{}
+	for{
+		ok :=ck.server.Call("KVServer.Get",&args,&reply)
+		if ok {
+			break;
+		}
+	}
+	//call success之后告诉服务器清除map中记录的operation
+	args = GetArgs{
+		Version: OperationId,
+		Message: ACK, 
+	}
+	for{
+		ok :=ck.server.Call("KVServer.Get",&args,&GetReply{})
+		if ok {
+			break;
+		}
+	}
+	return reply.Value
 }
 
 // shared by Put and Append.
@@ -50,7 +72,31 @@ func (ck *Clerk) Get(key string) string {
 // arguments. and reply must be passed as a pointer.
 func (ck *Clerk) PutAppend(key string, value string, op string) string {
 	// You will have to modify this function.
-	return ""
+	OperationId := nrand()
+	args := PutAppendArgs{
+		Key: key,
+		Value: value,
+		Version: OperationId,
+		Message: Modify,
+	}
+	reply := PutAppendReply{}
+	for{
+		ok := ck.server.Call("KVServer."+op, &args, &reply)
+		if ok {
+			break;
+		}
+	}
+	args = PutAppendArgs{
+		Version: OperationId,
+		Message: ACK,
+	}
+	for{
+		ok := ck.server.Call("KVServer."+op, &args, &PutAppendReply{})
+		if ok {
+			break;
+		}
+	}
+	return reply.Value
 }
 
 func (ck *Clerk) Put(key string, value string) {
@@ -58,6 +104,7 @@ func (ck *Clerk) Put(key string, value string) {
 }
 
 // Append value to key's value and return that value
+// Append 方法在旧值后面追加
 func (ck *Clerk) Append(key string, value string) string {
 	return ck.PutAppend(key, value, "Append")
 }
