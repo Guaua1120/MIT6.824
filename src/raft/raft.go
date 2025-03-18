@@ -97,6 +97,7 @@ type Raft struct {
 
 	applyCh		chan ApplyMsg	//所有的server共用的消息管道，用于发送日志请求
 
+	votedNums	int				//server作为candidate时得到的票数
 
 	timer		*time.Ticker	//每个节点的计时器
 }
@@ -286,7 +287,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 // capitalized all field names in structs passed over RPC, and
 // that the caller passes the address of the reply struct with &, not
 // the struct itself.
-func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs,reply *RequestVoteReply, votedNums *int) bool{
+func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *RequestVoteReply) bool{
 
 	if rf.killed() {
 		return false
@@ -316,6 +317,7 @@ func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs,reply *Request
 		//candidate 任期比投票者小，更新candidate的任期并变回follower
 		if(reply.Term>rf.currentTerm){
 			rf.state = Follower
+			rf.votedNums = 0
 			rf.currentTerm = reply.Term		
 			rf.votedFor = -1
 			rf.timer.Reset(getRandomTime())	
@@ -325,15 +327,15 @@ func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs,reply *Request
 	}
 
 	//candidate获得了选票
-	if reply.VoteGranted==true && reply.Term == rf.currentTerm && *votedNums <= (len(rf.peers)/2) {
-		*votedNums++
-		DPrintf("id:%v 获得了id: %v 的选票，目前得到了：%v 张票",rf.me,server,*votedNums)
+	if reply.VoteGranted==true && reply.Term == rf.currentTerm && rf.votedNums <= (len(rf.peers)/2) {
+		rf.votedNums++
+		DPrintf("id:%v 获得了id: %v 的选票，目前得到了：%v 张票",rf.me,server,rf.votedNums)
 	}
 
 	//统计票数，如果票数过一半，选举变成leader
-	if *votedNums > (len(rf.peers)/2){
+	if rf.votedNums > (len(rf.peers)/2){
 		DPrintf("id:%v 变成了leader,当前Term: %v ",rf.me,rf.currentTerm)
-		*votedNums = 0  		//防止重复变成leader执行
+		rf.votedNums = 0	 		//防止重复变成leader执行
 		rf.state = Leader
 
 		//初始化一些变量
@@ -606,8 +608,8 @@ func (rf *Raft) ticker() {
 				// 初始化自身的任期、并把票投给自己
 				rf.currentTerm += 1
 				rf.votedFor = rf.me
-				votedNums := 1 // 统计自身的票数
-				DPrintf("candidate:%v 给自己投票，票数为： %v",rf.me,votedNums)
+				rf.votedNums = 1 // 统计自身的票数
+				DPrintf("candidate:%v 给自己投票，票数为： %v",rf.me,rf.votedNums)
 
 				// 	每轮选举开始时，重新设置选举超时
 				//	如果使用固定时间ElectionTimeout，
@@ -631,7 +633,7 @@ func (rf *Raft) ticker() {
 					rf.mu.Unlock()
 
 					voteReply := RequestVoteReply{}
-					go rf.sendRequestVote(i, &voteArgs, &voteReply, &votedNums)
+					go rf.sendRequestVote(i, &voteArgs, &voteReply)
 				}
 				
 			case Leader:
@@ -644,7 +646,7 @@ func (rf *Raft) ticker() {
 					if i == rf.me {
 						continue
 					}
-					
+
 					rf.mu.Lock()
 					appendEntriesArgs := AppendEntriesArgs{
 						Term:         rf.currentTerm,
@@ -708,6 +710,7 @@ func Make(peers []*labrpc.ClientEnd, me int,
 		nextIndex:			make([]int,len(peers)),
 		matchIndex:			make([]int,len(peers)),			
 		applyCh:			applyCh,	
+		votedNums:			0,
 	}
 
 	rf.timer = time.NewTicker(getRandomTime())		//初始化计时器
