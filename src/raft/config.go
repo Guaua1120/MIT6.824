@@ -581,6 +581,8 @@ func (cfg *config) one(cmd interface{}, expectedServers int, retry bool) int {
 			t1 := time.Now()
 			for time.Since(t1).Seconds() < 2 {
 				nd, cmd1 := cfg.nCommitted(index)
+				//打印有多少server认为已提交
+				//cfg.t.Fatalf("There are %v server thinks cmd index: %v committed already", nd,index)
 				if nd > 0 && nd >= expectedServers {
 					// committed
 					if cmd1 == cmd {
