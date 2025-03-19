@@ -18,26 +18,33 @@ package raft
 //
 
 import (
-	//	"bytes"
+	"bytes"
 	"math/rand"
 	"sync"
 	"sync/atomic"
 	"time"
 
-	//	"6.5840/labgob"
+	"6.5840/labgob"
 	"6.5840/labrpc"
 
 )
 
-//to be implemented...
+// 日志结构
 type Log struct{
 	Term	int
 	Command	interface{}
 }
 const NULL int = -1
 
+//需要持久化的数据结构(字段首字母需大写)
+type PersistStruct struct{
+	CurrentTerm		int
+	VotedFor 		int
+	Logs	 		[]Log
+}
+
 //定义全局心跳间隔时间，必须保证 心跳时间 << 选举超时时间 <<平均故障时间MTBF
-const HeartBeat	 		= 100 * time.Millisecond	
+const HeartBeat	 		= 50 * time.Millisecond	
 //定义选举超时时间，在一个选举周期内未选出leader，重新进行选举
 const ElectionTimeout  	= 500 * time.Millisecond
 
@@ -130,12 +137,21 @@ func (rf *Raft) GetState() (int, bool) {
 func (rf *Raft) persist() {
 	// Your code here (3C).
 	// Example:
-	// w := new(bytes.Buffer)
-	// e := labgob.NewEncoder(w)
-	// e.Encode(rf.xxx)
-	// e.Encode(rf.yyy)
-	// raftstate := w.Bytes()
-	// rf.persister.Save(raftstate, nil)
+	// persistent state: currentTerm, votedFor, logs[]
+
+	w := new(bytes.Buffer)
+	e := labgob.NewEncoder(w)
+	ps := PersistStruct{
+		CurrentTerm:	rf.currentTerm,
+		VotedFor:		rf.votedFor,
+	}
+	ps.Logs = make([]Log,len(rf.logs))
+	copy(ps.Logs,rf.logs)
+
+	e.Encode(ps)
+	raftstate := w.Bytes()
+	//save的两个参数，一个是persistent状态，另一个是快照
+	rf.persister.Save(raftstate, nil)
 }
 
 
@@ -146,17 +162,17 @@ func (rf *Raft) readPersist(data []byte) {
 	}
 	// Your code here (3C).
 	// Example:
-	// r := bytes.NewBuffer(data)
-	// d := labgob.NewDecoder(r)
-	// var xxx
-	// var yyy
-	// if d.Decode(&xxx) != nil ||
-	//    d.Decode(&yyy) != nil {
-	//   error...
-	// } else {
-	//   rf.xxx = xxx
-	//   rf.yyy = yyy
-	// }
+	r := bytes.NewBuffer(data)
+	d := labgob.NewDecoder(r)
+	var ps PersistStruct
+	if d.Decode(&ps) != nil{
+	  	panic("persisten error")
+	} else {
+	  	rf.currentTerm = ps.CurrentTerm
+	  	rf.votedFor = ps.VotedFor
+		rf.logs = make([]Log,len(ps.Logs))		//深拷贝
+		copy(rf.logs,ps.Logs)
+	}
 }
 
 
@@ -215,6 +231,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	if rf.currentTerm < args.Term{
 		rf.votedFor = NULL				//新的一轮开启，先重置投票状态
 		rf.currentTerm = args.Term  	//更新投票者的term
+		rf.persist()					//持久化保存
 	}
 
 	if rf.votedFor==NULL{
@@ -244,6 +261,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 
 		//candidate日志更新
 		rf.votedFor = args.CandidateId
+		rf.persist()						//持久化保存
 		rf.state = Follower					//由leader变回follower
 		rf.timer.Reset(getRandomTime())		//重置定时器
 		reply.Term = rf.currentTerm
@@ -327,6 +345,7 @@ func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *Reques
 			rf.currentTerm = reply.Term		
 			rf.votedFor = -1
 			rf.timer.Reset(getRandomTime())	
+			rf.persist()		//持久化保存
 		}
 		return ok
 		
@@ -396,6 +415,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 		Command: command,
 	}
 	rf.logs = append(rf.logs,newEntry)
+	rf.persist()					//持久化保存
 	index = len(rf.logs)-1
 	rf.nextIndex[rf.me] = index + 1
 	rf.matchIndex[rf.me] = index
@@ -454,6 +474,7 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs,reply *App
 		rf.votedFor =NULL					//重置投票状态
 		rf.currentTerm = reply.Term 		//更新自己的任期
 		rf.timer.Reset(getRandomTime())  	//重新设置超时时间
+		rf.persist()						//持久化保存
 		DPrintf("leader：%v out of date ，id:%v 拒绝追加日志",rf.me,server)
 		return false
 	}
@@ -570,6 +591,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		rf.currentTerm = args.Term
 		rf.state = Follower
 		rf.votedFor = args.LeaderId
+		rf.persist()					//持久化保存
 		DPrintf("id:%v 重置心跳超时时间定时器",rf.me)
 		rf.timer.Reset(getRandomTime())
 	}
@@ -596,6 +618,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	rf.state = Follower				//防止candidate再次进行选举
 	rf.currentTerm = args.Term		
 	rf.votedFor = args.LeaderId
+	rf.persist()					//持久化保存
 	//DPrintf("id:%v 重置心跳超时时间定时器",rf.me)
 	rf.timer.Reset(getRandomTime())
 
@@ -607,6 +630,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	if len(args.Entries)!=0 {
 		rf.logs = append([]Log(nil), rf.logs[:args.PrevLogIndex + 1]...)		//将prevLogIndex之后的日志删除,左闭右开
 		rf.logs = append(rf.logs, args.Entries...)
+		rf.persist()															//持久化保存
 		DPrintf("follower:%v 成功handler日志追加,目前最后一条日志的索引为:%v",rf.me,len(rf.logs)-1)
 	}
 
@@ -668,7 +692,8 @@ func (rf *Raft) ticker() {
 				// 初始化自身的任期、并把票投给自己
 				rf.currentTerm += 1
 				rf.votedFor = rf.me
-				rf.votedNums = 1 // 统计自身的票数
+				rf.persist()					//持久化保存
+				rf.votedNums = 1 				// 统计自身的票数
 				DPrintf("candidate:%v 给自己投票，票数为： %v",rf.me,rf.votedNums)
 
 				// 	每轮选举开始时，重新设置选举超时
