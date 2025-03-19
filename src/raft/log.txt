@@ -1,0 +1,720 @@
+[/home/hd/6.5840/src/raft/config.go:382]disconnect(0)
+
+[/home/hd/6.5840/src/raft/config.go:382]disconnect(1)
+
+[/home/hd/6.5840/src/raft/config.go:382]disconnect(2)
+
+[/home/hd/6.5840/src/raft/config.go:358]connect(0)
+
+[/home/hd/6.5840/src/raft/config.go:358]connect(1)
+
+[/home/hd/6.5840/src/raft/config.go:358]connect(2)
+
+[/home/hd/6.5840/src/raft/raft.go:671]candidate:2 给自己投票，票数为： 1
+[/home/hd/6.5840/src/raft/raft.go:343]id:2 变成了leader,当前Term: 1 
+[/home/hd/6.5840/src/raft/raft.go:392]执行了一次start,往leader里面新增了一个日志条目========================================================================
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:1
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 1
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 1
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:0
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 1 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:550][/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:2 的追加日志请求follower:1 处理leader:2 的追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:609][/home/hd/6.5840/src/raft/raft.go:609]follower:1 成功handler日志追加,目前最后一条日志的索引为:1follower:0 成功handler日志追加,目前最后一条日志的索引为:1
+
+[/home/hd/6.5840/src/raft/raft.go:431][/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：0 发送追加日志请求leader: 2 向 follower：1 发送追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:432][/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：0,发送的日志项的长度为:1
+follower:1 的心跳参数PrevLogIndex：0,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:468]leader:2 更新了follower:0的nextIndex,现在的值为：2 
+[/home/hd/6.5840/src/raft/raft.go:469]id:0 追加日志成功
+[/home/hd/6.5840/src/raft/raft.go:468]leader:2 更新了follower:1的nextIndex,现在的值为：2 
+[/home/hd/6.5840/src/raft/raft.go:469]id:1 追加日志成功
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:1
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:0
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 1 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 1 的日志replicated+1，现在count= 2
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 1 的日志replicated+1，现在count= 3
+[/home/hd/6.5840/src/raft/raft.go:522]leader:2 最后一条将要提交的日志索引为: 1 
+[/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:2 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:537]leader:2 索引index=1 的日志已提交
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:2 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:1
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=1
+[/home/hd/6.5840/src/raft/raft.go:550][/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:2 的追加日志请求follower:0 处理leader:2 的追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:431][/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：0 发送追加日志请求leader: 2 向 follower：1 发送追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:432][/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0
+
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:1
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=1
+[/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:2 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:2 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432][/home/hd/6.5840/src/raft/raft.go:431]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0leader: 2 向 follower：1 发送追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:1
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=1
+[/home/hd/6.5840/src/raft/raft.go:550][/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:2 的追加日志请求follower:0 处理leader:2 的追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:431][/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：0 发送追加日志请求leader: 2 向 follower：1 发送追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:1
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=1
+[/home/hd/6.5840/src/raft/raft.go:550][/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:2 的追加日志请求follower:1 处理leader:2 的追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:1
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=1
+[/home/hd/6.5840/src/raft/raft.go:550][/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:2 的追加日志请求follower:0 处理leader:2 的追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:431][/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：0 发送追加日志请求leader: 2 向 follower：1 发送追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/config.go:382]disconnect(2)
+
+[/home/hd/6.5840/src/raft/raft.go:392]执行了一次start,往leader里面新增了一个日志条目========================================================================
+[/home/hd/6.5840/src/raft/raft.go:392]执行了一次start,往leader里面新增了一个日志条目========================================================================
+[/home/hd/6.5840/src/raft/raft.go:392]执行了一次start,往leader里面新增了一个日志条目========================================================================
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:4
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=4
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 4 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:671]candidate:1 给自己投票，票数为： 1
+[/home/hd/6.5840/src/raft/raft.go:343]id:1 变成了leader,当前Term: 2 
+[/home/hd/6.5840/src/raft/raft.go:701][/home/hd/6.5840/src/raft/raft.go:392]leader:2 的最后一条日志索引为:4执行了一次start,往leader里面新增了一个日志条目========================================================================
+
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=4
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 4 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 1 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:1 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:609]follower:0 成功handler日志追加,目前最后一条日志的索引为:2
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:468]leader:1 更新了follower:0的nextIndex,现在的值为：3 
+[/home/hd/6.5840/src/raft/raft.go:469]id:0 追加日志成功
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:4
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=4
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 4 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 1 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 1 的索引为index= 2 的日志replicated+1，现在count= 2
+[/home/hd/6.5840/src/raft/raft.go:522]leader:1 最后一条将要提交的日志索引为: 2 
+[/home/hd/6.5840/src/raft/raft.go:537]leader:1 索引index=2 的日志已提交
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:4
+[/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:1 的追加日志请求[/home/hd/6.5840/src/raft/raft.go:723]
+将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=4
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 4 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:4
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:1 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432][/home/hd/6.5840/src/raft/raft.go:489]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=4
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 4 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:4
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:550][/home/hd/6.5840/src/raft/raft.go:505]follower:0 处理leader:1 的追加日志请求leader:2 的最后一条日志的index=4
+
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 4 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:4
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=4
+[/home/hd/6.5840/src/raft/raft.go:550][/home/hd/6.5840/src/raft/raft.go:517]follower:0 处理leader:1 的追加日志请求leader: 2 的索引为index= 4 的日志replicated+1，现在count= 1
+
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:4
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程[/home/hd/6.5840/src/raft/raft.go:550]
+follower:0 处理leader:1 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=4
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 4 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:2 的最后一条日志索引为:4
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:1 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=4
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 4 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/config.go:382]disconnect(1)
+
+[/home/hd/6.5840/src/raft/config.go:358]connect(2)
+
+[/home/hd/6.5840/src/raft/raft.go:392]执行了一次start,往leader里面新增了一个日志条目========================================================================
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程[/home/hd/6.5840/src/raft/raft.go:701]
+leader:2 的最后一条日志索引为:5
+[/home/hd/6.5840/src/raft/raft.go:723][/home/hd/6.5840/src/raft/raft.go:504]将要发送请求的nextIndex[0]为: 2leader:1 的commitIndex=:2
+
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:2 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:2 的commitIndex=:1
+[/home/hd/6.5840/src/raft/raft.go:505]leader:2 的最后一条日志的index=5
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 5 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 4 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 2 的索引为index= 2 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:2 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:564]leader:2 out of date ,拒绝追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:4
+[/home/hd/6.5840/src/raft/raft.go:457]leader：2 out of date ，id:0 拒绝追加日志
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:2 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:564]leader:2 out of date ,拒绝追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 2 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:478]日志出现冲突，id:0 追加日志失败
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:671]candidate:0 给自己投票，票数为： 1
+[/home/hd/6.5840/src/raft/raft.go:343]id:0 变成了leader,当前Term: 3 
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:588]follower:2 与leader:0 日志存在冲突
+[/home/hd/6.5840/src/raft/raft.go:589]follower:2 的最后一条日志下标为:5,args.PrevLogIndex=2,args.PrevLogTerm=2
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:478]日志出现冲突，id:2 追加日志失败
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:609]follower:2 成功handler日志追加,目前最后一条日志的索引为:2
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:468]leader:0 更新了follower:2的nextIndex,现在的值为：3 
+[/home/hd/6.5840/src/raft/raft.go:469]id:2 追加日志成功
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:2 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:564]leader:2 out of date ,拒绝追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 2 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:0 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:478]日志出现冲突，id:0 追加日志失败
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:496]leader:0 新任期刚开始，没有需要提交的日志
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:392]执行了一次start,往leader里面新增了一个日志条目========================================================================
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 3
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:0 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:0 的最后一条日志的index=3
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 0 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:609]follower:2 成功handler日志追加,目前最后一条日志的索引为:3
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：2,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:468]leader:0 更新了follower:2的nextIndex,现在的值为：4 
+[/home/hd/6.5840/src/raft/raft.go:469]id:2 追加日志成功
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 4
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:0 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:0 的最后一条日志的index=3
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 0 的索引为index= 3 的日志replicated+1，现在count= 1
+[/home/hd/6.5840/src/raft/raft.go:517]leader: 0 的索引为index= 3 的日志replicated+1，现在count= 2
+[/home/hd/6.5840/src/raft/raft.go:522]leader:0 最后一条将要提交的日志索引为: 3 
+[/home/hd/6.5840/src/raft/raft.go:537]leader:0 索引index=3 的日志已提交
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：3,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 2 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:701]leader:1 的最后一条日志索引为:2
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[0]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 2
+[/home/hd/6.5840/src/raft/raft.go:489]leader:1 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:1 的commitIndex=:2
+[/home/hd/6.5840/src/raft/raft.go:505]leader:1 的最后一条日志的index=2
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 4
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:0 的commitIndex=:3
+[/home/hd/6.5840/src/raft/raft.go:505]leader:0 的最后一条日志的index=3
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：3,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/config.go:358]connect(1)
+
+[/home/hd/6.5840/src/raft/raft.go:392]执行了一次start,往leader里面新增了一个日志条目========================================================================
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:573]id:1 重置心跳超时时间定时器
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 4
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:0 的commitIndex=:3
+[/home/hd/6.5840/src/raft/raft.go:505]leader:0 的最后一条日志的index=3
+[/home/hd/6.5840/src/raft/raft.go:550][/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:0 的追加日志请求follower:2 处理leader:0 的追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:609]follower:1 成功handler日志追加,目前最后一条日志的索引为:3
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求[/home/hd/6.5840/src/raft/raft.go:431]
+leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432][/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：3,发送的日志项的长度为:0
+follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:468]leader:0 更新了follower:1的nextIndex,现在的值为：4 
+[/home/hd/6.5840/src/raft/raft.go:469]id:1 追加日志成功
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:550]follower:0 处理leader:1 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:564]leader:1 out of date ,拒绝追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 1 向 follower：0 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:0 的心跳参数PrevLogIndex：2,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:478]日志出现冲突，id:0 追加日志失败
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 4
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 4
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:0 的commitIndex=:3
+[/home/hd/6.5840/src/raft/raft.go:505]leader:0 的最后一条日志的index=3
+[/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:431][/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：1 发送追加日志请求
+leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432][/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：3,发送的日志项的长度为:0follower:1 的心跳参数PrevLogIndex：3,发送的日志项的长度为:0
+
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 4
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 4
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:0 的commitIndex=:3
+[/home/hd/6.5840/src/raft/raft.go:505]leader:0 的最后一条日志的index=3
+[/home/hd/6.5840/src/raft/raft.go:550][/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:0 的追加日志请求follower:2 处理leader:0 的追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：3,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：3,发送的日志项的长度为:0
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 2 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:2 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:564]leader:2 out of date ,拒绝追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 2 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:1 的心跳参数PrevLogIndex：1,发送的日志项的长度为:3
+[/home/hd/6.5840/src/raft/raft.go:478]日志出现冲突，id:1 追加日志失败
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:1 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:564]leader:1 out of date ,拒绝追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:478]日志出现冲突，id:2 追加日志失败
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 4
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[2]为: 4
+[/home/hd/6.5840/src/raft/raft.go:489]leader:0 执行tryCommit协程
+[/home/hd/6.5840/src/raft/raft.go:504]leader:0 的commitIndex=:3
+[/home/hd/6.5840/src/raft/raft.go:505]leader:0 的最后一条日志的index=3
+[/home/hd/6.5840/src/raft/raft.go:550][/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:0 的追加日志请求follower:1 处理leader:0 的追加日志请求
+
+[/home/hd/6.5840/src/raft/raft.go:431][/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：1 发送追加日志请求
+leader: 0 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432][/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：3,发送的日志项的长度为:0follower:1 的心跳参数PrevLogIndex：3,发送的日志项的长度为:0
+
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:550]follower:1 处理leader:0 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:609]follower:1 成功handler日志追加,目前最后一条日志的索引为:3
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 0 向 follower：1 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:1 的心跳参数PrevLogIndex：2,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:468]leader:0 更新了follower:1的nextIndex,现在的值为：5 
+[/home/hd/6.5840/src/raft/raft.go:469]id:1 追加日志成功
+[/home/hd/6.5840/src/raft/raft.go:431]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:432]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:550]follower:2 处理leader:1 的追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:564]leader:1 out of date ,拒绝追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:439]leader: 1 向 follower：2 发送追加日志请求
+[/home/hd/6.5840/src/raft/raft.go:440]follower:2 的心跳参数PrevLogIndex：1,发送的日志项的长度为:1
+[/home/hd/6.5840/src/raft/raft.go:478]日志出现冲突，id:2 追加日志失败
+[/home/hd/6.5840/src/raft/raft.go:701]leader:0 的最后一条日志索引为:3
+[/home/hd/6.5840/src/raft/raft.go:723]将要发送请求的nextIndex[1]为: 5

@@ -37,7 +37,7 @@ type Log struct{
 const NULL int = -1
 
 //定义全局心跳间隔时间，必须保证 心跳时间 << 选举超时时间 <<平均故障时间MTBF
-const HeartBeat	 		= 120 * time.Millisecond	
+const HeartBeat	 		= 100 * time.Millisecond	
 //定义选举超时时间，在一个选举周期内未选出leader，重新进行选举
 const ElectionTimeout  	= 500 * time.Millisecond
 
@@ -230,7 +230,13 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		// 更新的定义：投票者和candidate的日志，最后一条日志的任期号大的更新，如果任期号相同，则索引号更大的更新
 
 		//投票者日志更新
-		if !(args.LastLogTerm > currentLogTerm || ((args.LastLogTerm == currentLogTerm) && args.LastLogIndex >= currentLogIndex))  {
+		// if !(args.LastLogTerm > currentLogTerm || ((args.LastLogTerm == currentLogTerm) && args.LastLogIndex >= currentLogIndex))  {
+		// 	reply.VoteGranted = false
+		// 	reply.Term = rf.currentTerm
+		// 	return
+		// }
+
+		if 	(args.LastLogTerm < currentLogTerm || ((args.LastLogTerm == currentLogTerm) && args.LastLogIndex < currentLogIndex))  {
 			reply.VoteGranted = false
 			reply.Term = rf.currentTerm
 			return
@@ -383,7 +389,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 	}
 
 	//是leader的话就将日志条目初始化并添加到leader的日志列表中并返回
-	DPrintf("执行了一次start,往leader里面新增了一个日志条目========================================================================")
+	DPrintf("执行了一次start,往leader：%v 里面新增了一个日志条目========================================================================",rf.me)
 	isLeader = true
 	newEntry := Log{
 		Term: rf.currentTerm,
@@ -422,14 +428,14 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs,reply *App
 
 	// 如果append失败应该不断的retries ,直到这个log成功的被store
 	ok := rf.peers[server].Call("Raft.AppendEntries", args, reply)
-	DPrintf("leader: %v 向 follower：%v 发送追加日志请求",rf.me,server)
-	DPrintf("follower:%v 的心跳参数PrevLogIndex：%v,发送的日志项的长度为:%v",server,args.PrevLogIndex,len(args.Entries))
-	for !ok {
-		//发送端宕机，直接return
-		if rf.killed() {
-			return false
-		}
-		ok = rf.peers[server].Call("Raft.AppendEntries", args, reply)
+	// for !ok {
+	// 	//发送端宕机，直接return
+	// 	if rf.killed() {
+	// 		return false
+	// 	}
+	// 	ok = rf.peers[server].Call("Raft.AppendEntries", args, reply)
+	// }
+	if ok {
 		DPrintf("leader: %v 向 follower：%v 发送追加日志请求",rf.me,server)
 		DPrintf("follower:%v 的心跳参数PrevLogIndex：%v,发送的日志项的长度为:%v",server,args.PrevLogIndex,len(args.Entries))
 	}
@@ -457,9 +463,9 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs,reply *App
 	//2、follower成功copy，更新nextIndex和matchIndex 
 	if reply.Success {
 		if len(args.Entries)!=0{
-			DPrintf("leader:%v 更新了follower:%v的nextIndex",rf.me,server)
 			rf.nextIndex[server] += len(args.Entries) 				//	nextIndex更新为leader的最后一条日志index+1
 			rf.matchIndex[server] = rf.nextIndex[server] -1			//	matchIndex更新为leader的最后一条日志的index
+			DPrintf("leader:%v 更新了follower:%v的nextIndex,现在的值为：%v ",rf.me,server,rf.nextIndex[server])
 			DPrintf("id:%v 追加日志成功",server)
 		}
 	}else{
@@ -576,6 +582,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	// 1、follower在args.preLogIndex处还没有下标（args.preLogIndex大于follower的最后一条日志的下标），说明follower前面还有没收到的下标，因此拒绝该日志
 	// 2、如果follwer的preLogIndex处的日志的任期和args.preLogTerm不相等，那么说明日志存在conflict,拒绝附加日志
 
+	//当len(args.Entries)==0时是否直接跳过冲突日志的判断
 	if len(rf.logs)-1 < args.PrevLogIndex || (len(rf.logs)-1 >= args.PrevLogIndex && rf.logs[args.PrevLogIndex].Term !=args.PrevLogTerm){
 		reply.Success = false
 		reply.Term = rf.currentTerm
@@ -589,7 +596,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	rf.state = Follower				//防止candidate再次进行选举
 	rf.currentTerm = args.Term		
 	rf.votedFor = args.LeaderId
-	DPrintf("id:%v 重置心跳超时时间定时器",rf.me)
+	//DPrintf("id:%v 重置心跳超时时间定时器",rf.me)
 	rf.timer.Reset(getRandomTime())
 
 
