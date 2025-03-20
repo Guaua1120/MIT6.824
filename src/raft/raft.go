@@ -44,7 +44,7 @@ type PersistStruct struct{
 }
 
 //定义全局心跳间隔时间，必须保证 心跳时间 << 选举超时时间 <<平均故障时间MTBF
-const HeartBeat	 		= 50 * time.Millisecond	
+const HeartBeat	 		= 70 * time.Millisecond	
 //定义选举超时时间，在一个选举周期内未选出leader，重新进行选举
 const ElectionTimeout  	= 500 * time.Millisecond
 
@@ -436,6 +436,10 @@ type AppendEntriesArgs struct{
 type AppendEntriesReply struct{
 	Term			int		//心跳接收者当前的任期
 	Success			bool	//是否更新日志成功
+	//当日志发生冲突时，交给leader的信息 (优化项)
+	XTerm			int 	//follower中冲突的日志项的Term
+	XIndex			int  	//follower中与冲突项的Term相同的第一个日志项的index
+	XLen			int		//follower的日志长度
 
 }
 
@@ -458,6 +462,8 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs,reply *App
 	if ok {
 		DPrintf("leader: %v 向 follower：%v 发送追加日志请求",rf.me,server)
 		DPrintf("follower:%v 的心跳参数PrevLogIndex：%v,发送的日志项的长度为:%v",server,args.PrevLogIndex,len(args.Entries))
+	}else{
+		return false
 	}
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
@@ -469,7 +475,7 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs,reply *App
 
 	//请求过期
 	//网络出现分区，follower的任期比leader要大,leader重新变回follower，并重置超时时间
-	if rf.currentTerm<reply.Term {
+	if args.Term<reply.Term {
 		rf.state = Follower  				//leader重新变回follower
 		rf.votedFor =NULL					//重置投票状态
 		rf.currentTerm = reply.Term 		//更新自己的任期
@@ -496,10 +502,45 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs,reply *App
 		//	1.2、如果follwer的preLogIndex处的日志的任期和args.preLogTerm不相等，那么说明日志存在conflict,拒绝附加日志	
 		//2、接收端宕机（上面已处理）
 		//3、出现网络分区，leader已经OutOfDate（上面已处理）
-		DPrintf("日志出现冲突，id:%v 追加日志失败",server)
-		if rf.nextIndex[server]>1{
-			rf.nextIndex[server]--		//decrement the server nextIndex value,防止出现越界
+
+		DPrintf("leader:%v 日志出现冲突，id:%v 追加日志失败",rf.me,server)
+		DPrintf("args的参数：args.Term = %v,args.LeaderId = %v,args.PrevLogIndex = %v ",args.Term,args.LeaderId,args.PrevLogIndex)
+		//对nextIndex的更新需要进行优化，加快执行速度
+		//	 Case 1: leader doesn't have XTerm:
+    	//		nextIndex = XIndex
+		//	Case 2: leader has XTerm:
+	  	//		nextIndex = leader's last entry for XTerm
+		//	Case 3: follower's log is too short:
+	  	//		nextIndex = XLen
+
+		if rf.nextIndex[server] > reply.XLen{
+			rf.nextIndex[server] = reply.XLen
+		}else{
+			flag := false
+			var last int		//leader's last entry for XTerm
+			for i :=len(rf.logs)-1 ;i>=0;i--{
+				if rf.logs[i].Term == reply.XTerm{
+					flag = true
+					last = i
+					break;
+				}
+			}
+			if !flag{
+				rf.nextIndex[server] = reply.XIndex
+			}else{
+				rf.nextIndex[server] = last
+			}
+
 		}
+
+		DPrintf("reply的参数：reply.XTerm = %v,reply.XIndex = %v ,reply.XLen = %v",reply.XTerm,reply.XIndex,reply.XLen)
+		DPrintf("leader: %v,rf.nextIndex[%v] = %v",rf.me,server,rf.nextIndex[server])
+		
+		
+		// if rf.nextIndex[server]>1{
+		// 	rf.nextIndex[server]--
+		// }
+
 	}
 	return ok
 }
@@ -570,6 +611,8 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	
 	DPrintf("follower:%v 处理leader:%v 的追加日志请求",rf.me,args.LeaderId)
 	
+	reply.XLen = len(rf.logs)
+
 	// 当前接收端server crash
 	if rf.killed() {
 		reply.Term = -1
@@ -578,7 +621,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	}
 
 
-	// 出现网络分区，leader的任期，比当前raft的任期还小，说明leader已经OutOfDate
+	// 出现网络分区，leader的任期比当前raft的任期还小，说明leader已经OutOfDate
 	if args.Term < rf.currentTerm {
 		reply.Success = false
 		reply.Term = rf.currentTerm  //传递用于更新过时leader的任期
@@ -608,6 +651,18 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	if len(rf.logs)-1 < args.PrevLogIndex || (len(rf.logs)-1 >= args.PrevLogIndex && rf.logs[args.PrevLogIndex].Term !=args.PrevLogTerm){
 		reply.Success = false
 		reply.Term = rf.currentTerm
+
+		//follower足够长才进行遍历
+		if len(rf.logs)-1 >= args.PrevLogIndex{
+			for i:=0;i<len(rf.logs);i++{
+				if rf.logs[i].Term == rf.logs[args.PrevLogIndex].Term{
+					reply.XIndex = i
+					break
+				}
+			}
+			reply.XTerm = rf.logs[args.PrevLogIndex].Term
+		}
+		
 		DPrintf("follower:%v 与leader:%v 日志存在冲突",rf.me,args.LeaderId)
 		DPrintf("follower:%v 的最后一条日志下标为:%v,args.PrevLogIndex=%v,args.PrevLogTerm=%v",rf.me,len(rf.logs)-1,args.PrevLogIndex,args.PrevLogTerm)
 		return
@@ -751,11 +806,13 @@ func (rf *Raft) ticker() {
 						//深拷贝解引用
 						appendEntriesArgs.Entries= make([]Log, len(rf.logs[rf.nextIndex[i]:]))
 						copy(appendEntriesArgs.Entries, rf.logs[rf.nextIndex[i]:])
+						
 					}
-
-					if appendEntriesArgs.PrevLogIndex > 0 {
+					
+					if appendEntriesArgs.PrevLogIndex < len(rf.logs) && appendEntriesArgs.PrevLogIndex>=0 {
 						appendEntriesArgs.PrevLogTerm = rf.logs[appendEntriesArgs.PrevLogIndex].Term
 					}
+
 					rf.mu.Unlock()	
 					go rf.sendAppendEntries(i, &appendEntriesArgs, &appendEntriesReply)
 				}
