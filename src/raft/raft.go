@@ -44,7 +44,7 @@ type PersistStruct struct{
 }
 
 //定义全局心跳间隔时间，必须保证 心跳时间 << 选举超时时间 <<平均故障时间MTBF
-const HeartBeat	 		= 70 * time.Millisecond	
+const HeartBeat	 		= 50 * time.Millisecond	
 //定义选举超时时间，在一个选举周期内未选出leader，重新进行选举
 const ElectionTimeout  	= 500 * time.Millisecond
 
@@ -246,13 +246,6 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		// 比较最后一条日志的Term或者索引
 		// 更新的定义：投票者和candidate的日志，最后一条日志的任期号大的更新，如果任期号相同，则索引号更大的更新
 
-		//投票者日志更新
-		// if !(args.LastLogTerm > currentLogTerm || ((args.LastLogTerm == currentLogTerm) && args.LastLogIndex >= currentLogIndex))  {
-		// 	reply.VoteGranted = false
-		// 	reply.Term = rf.currentTerm
-		// 	return
-		// }
-
 		if 	(args.LastLogTerm < currentLogTerm || ((args.LastLogTerm == currentLogTerm) && args.LastLogIndex < currentLogIndex))  {
 			reply.VoteGranted = false
 			reply.Term = rf.currentTerm
@@ -408,7 +401,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 	}
 
 	//是leader的话就将日志条目初始化并添加到leader的日志列表中并返回
-	DPrintf("执行了一次start,往leader：%v 里面新增了一个日志条目========================================================================",rf.me)
+	DPrintf("执行了一次start,往leader：%v 里面新增了一个日志条目",rf.me)
 	isLeader = true
 	newEntry := Log{
 		Term: rf.currentTerm,
@@ -452,13 +445,6 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs,reply *App
 
 	// 如果append失败应该不断的retries ,直到这个log成功的被store
 	ok := rf.peers[server].Call("Raft.AppendEntries", args, reply)
-	// for !ok {
-	// 	//发送端宕机，直接return
-	// 	if rf.killed() {
-	// 		return false
-	// 	}
-	// 	ok = rf.peers[server].Call("Raft.AppendEntries", args, reply)
-	// }
 	if ok {
 		DPrintf("leader: %v 向 follower：%v 发送追加日志请求",rf.me,server)
 		DPrintf("follower:%v 的心跳参数PrevLogIndex：%v,发送的日志项的长度为:%v",server,args.PrevLogIndex,len(args.Entries))
@@ -505,6 +491,7 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs,reply *App
 
 		DPrintf("leader:%v 日志出现冲突，id:%v 追加日志失败",rf.me,server)
 		DPrintf("args的参数：args.Term = %v,args.LeaderId = %v,args.PrevLogIndex = %v ",args.Term,args.LeaderId,args.PrevLogIndex)
+
 		//对nextIndex的更新需要进行优化，加快执行速度
 		//	 Case 1: leader doesn't have XTerm:
     	//		nextIndex = XIndex
@@ -513,33 +500,27 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs,reply *App
 		//	Case 3: follower's log is too short:
 	  	//		nextIndex = XLen
 
-		if rf.nextIndex[server] > reply.XLen{
+		if reply.XTerm == -1 {
+			// 日志过短，回退到 XLen
 			rf.nextIndex[server] = reply.XLen
-		}else{
-			flag := false
-			var last int		//leader's last entry for XTerm
-			for i :=len(rf.logs)-1 ;i>=0;i--{
-				if rf.logs[i].Term == reply.XTerm{
-					flag = true
-					last = i
-					break;
+		} else {
+			// 在 leader 的日志里查找 reply.XTerm
+			lastIndex := -1
+			for i := len(rf.logs) - 1; i >= 0; i-- {
+				if rf.logs[i].Term == reply.XTerm {
+					lastIndex = i
+					break
 				}
 			}
-			if !flag{
+			if lastIndex != -1 {
+				rf.nextIndex[server] = lastIndex
+			} else {
 				rf.nextIndex[server] = reply.XIndex
-			}else{
-				rf.nextIndex[server] = last
 			}
-
 		}
 
 		DPrintf("reply的参数：reply.XTerm = %v,reply.XIndex = %v ,reply.XLen = %v",reply.XTerm,reply.XIndex,reply.XLen)
 		DPrintf("leader: %v,rf.nextIndex[%v] = %v",rf.me,server,rf.nextIndex[server])
-		
-		
-		// if rf.nextIndex[server]>1{
-		// 	rf.nextIndex[server]--
-		// }
 
 	}
 	return ok
@@ -639,6 +620,15 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		rf.timer.Reset(getRandomTime())
 	}
 
+	// 日志正常无冲突收到了心跳,更新自身的信息
+	rf.state = Follower				//防止candidate再次进行选举
+	rf.currentTerm = args.Term		
+	rf.votedFor = args.LeaderId
+	rf.persist()					//持久化保存
+	DPrintf("id:%v 重置心跳超时时间定时器",rf.me)
+	rf.timer.Reset(getRandomTime())
+	reply.Success = true
+	reply.Term = rf.currentTerm
 
 	// 网络没有问题，判断日志是否出现冲突
 	// Reply false if log doesn’t contain an entry at prevLogIndex,whose term matches prevLogTerm 
@@ -647,39 +637,26 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	// 1、follower在args.preLogIndex处还没有下标（args.preLogIndex大于follower的最后一条日志的下标），说明follower前面还有没收到的下标，因此拒绝该日志
 	// 2、如果follwer的preLogIndex处的日志的任期和args.preLogTerm不相等，那么说明日志存在conflict,拒绝附加日志
 
-	//当len(args.Entries)==0时是否直接跳过冲突日志的判断
-	if len(rf.logs)-1 < args.PrevLogIndex || (len(rf.logs)-1 >= args.PrevLogIndex && rf.logs[args.PrevLogIndex].Term !=args.PrevLogTerm){
+	if len(rf.logs)-1 < args.PrevLogIndex {
+		// Follower 日志长度不够
 		reply.Success = false
 		reply.Term = rf.currentTerm
-
-		//follower足够长才进行遍历
-		if len(rf.logs)-1 >= args.PrevLogIndex{
-			for i:=0;i<len(rf.logs);i++{
-				if rf.logs[i].Term == rf.logs[args.PrevLogIndex].Term{
-					reply.XIndex = i
-					break
-				}
+		reply.XTerm = -1 // 标记 leader 需要回退
+		reply.XLen = len(rf.logs)
+		return
+	} else if rf.logs[args.PrevLogIndex].Term != args.PrevLogTerm {
+		// 找到冲突的 XTerm
+		reply.Success = false
+		reply.Term = rf.currentTerm
+		reply.XTerm = rf.logs[args.PrevLogIndex].Term
+		for i := args.PrevLogIndex; i >= 0; i-- {
+			if rf.logs[i].Term != reply.XTerm {
+				reply.XIndex = i + 1
+				break
 			}
-			reply.XTerm = rf.logs[args.PrevLogIndex].Term
 		}
-		
-		DPrintf("follower:%v 与leader:%v 日志存在冲突",rf.me,args.LeaderId)
-		DPrintf("follower:%v 的最后一条日志下标为:%v,args.PrevLogIndex=%v,args.PrevLogTerm=%v",rf.me,len(rf.logs)-1,args.PrevLogIndex,args.PrevLogTerm)
 		return
 	}
-
-
-	// 日志正常无冲突收到了心跳,更新自身的信息
-	rf.state = Follower				//防止candidate再次进行选举
-	rf.currentTerm = args.Term		
-	rf.votedFor = args.LeaderId
-	rf.persist()					//持久化保存
-	//DPrintf("id:%v 重置心跳超时时间定时器",rf.me)
-	rf.timer.Reset(getRandomTime())
-
-
-	reply.Success = true
-	reply.Term = rf.currentTerm
 
 	// 不是心跳的话就在follower中追加日志(深拷贝解引用)
 	if len(args.Entries)!=0 {
@@ -690,7 +667,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	}
 
 	// 根据args里面的LeaderCommit将（上一步的RPC请求的）日志提交至与Leader相同
-	for rf.lastApplied < args.LeaderCommit {
+	for rf.lastApplied < args.LeaderCommit && rf.lastApplied < len(rf.logs) {
 		rf.lastApplied++
 		applyMsg := ApplyMsg{
 			CommandValid: true,
@@ -700,7 +677,6 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		rf.applyCh <- applyMsg
 		rf.commitIndex = rf.lastApplied
 	}
-
 	return
 }
 
